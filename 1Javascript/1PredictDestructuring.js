@@ -22,7 +22,7 @@ console.log(name);
 console.log(otherName);
 /*Prediction:
 error name not defined
-Elon
+(if you fix error) Elon
 */
 
 const person = {
