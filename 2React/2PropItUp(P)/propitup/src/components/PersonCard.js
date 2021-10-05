@@ -1,5 +1,4 @@
 import React from 'react';
-import '../App.css';
 
 const PersonCard = (props) => {
   const {firstName, lastName, age, hairColor} = props
