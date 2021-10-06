@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+input{
+  border-radius: 3px;
+}
+
+.badInput{
+  border: red 2px solid;
+}
+
+.goodInput{
+  border: limegreen 2px solid;
+}
+
+.error{
+  color: red;
+}

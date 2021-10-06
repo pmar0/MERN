@@ -1,16 +1,17 @@
 import React, {useState} from 'react';
 
 const UserForm = (props) => {
-    const [firstName, setFirstName] = useState("")
-    const [firstNameError, setFirstNameError] = useState("")
-    const [lastName, setLastName] = useState("")
-    const [lastNameError, setLastNameError] = useState("")
-    const [email, setEmail] = useState("")
-    const [emailError, setEmailError] = useState("")
-    const [password, setPassword] = useState("")
-    const [passwordError, setPasswordError] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
-    const [confirmPasswordError, setConfirmPasswordError] = useState("")
+    const [firstName, setFirstName] = useState("");
+    const [firstNameError, setFirstNameError] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [lastNameError, setLastNameError] = useState("");
+    const [email, setEmail] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [confirmPasswordError, setConfirmPasswordError] = useState("");
+    const [isError, setIsError] = useState(true);
 
     const createUser = (e) => {
         e.preventDefault();
@@ -31,9 +32,11 @@ const UserForm = (props) => {
         }
         else if (e.target.value.length < 2) {
             setFirstNameError("First name must be minimum 2 characters long.");
+            setIsError(true);
         }
         else {
             setFirstNameError("");
+            setIsError(false);
         }
     }
 
@@ -44,9 +47,11 @@ const UserForm = (props) => {
         }
         else if (e.target.value.length < 2) {
             setLastNameError("Last name must be minimum 2 characters long.");
+            setIsError(true);
         }
         else {
             setLastNameError("");
+            setIsError(false);
         }
     }
 
@@ -57,9 +62,11 @@ const UserForm = (props) => {
         }
         else if (e.target.value.length < 5) {
             setEmailError("Email must be minimum 5 characters long.");
+            setIsError(true);
         }
         else {
             setEmailError("");
+            setIsError(false);
         }
     }
 
@@ -70,9 +77,11 @@ const UserForm = (props) => {
         }
         else if (e.target.value.length < 8) {
             setPasswordError("Password must be minimum 8 characters long.");
+            setIsError(true);
         }
         else {
             setPasswordError("");
+            setIsError(false);
         }
     }
 
@@ -83,9 +92,11 @@ const UserForm = (props) => {
         }
         else if (e.target.value !== password) {
             setConfirmPasswordError("Passwords must match.");
+            setIsError(true);
         }
         else {
             setConfirmPasswordError("");
+            setIsError(false);
         }
     }
 
@@ -95,51 +106,71 @@ const UserForm = (props) => {
             <form onSubmit={createUser}>
                 <div>
                     <label htmlFor="firstName">First Name: </label>
-                    <input type="text" id="firstName" value={firstName} onChange={handleFirstName} />
+                    <input type="text"
+                    id="firstName"
+                    value={firstName}
+                    onChange={handleFirstName}
+                    className={firstNameError?"badInput":firstName===""?null:"goodInput"}/>
                     {
                         firstNameError?
-                        <p>{firstNameError}</p>:
+                        <p className="alert">{firstNameError}</p>:
                         null
                     }
                 </div>
                 <div>
                     <label htmlFor="lastName">Last Name: </label>
-                    <input type="text" id="lastName" value={lastName} onChange={handleLastName} />
+                    <input type="text"
+                    id="lastName"
+                    value={lastName}
+                    onChange={handleLastName}
+                    className={lastNameError?"badInput":lastName===""?null:"goodInput"}/>
                     {
                         lastNameError?
-                        <p>{lastNameError}</p>:
+                        <p className="alert">{lastNameError}</p>:
                         null
                     }
                 </div>
                 <div>
                     <label htmlFor="email">Email: </label>
-                    <input type="text" id="email" value={email} onChange={handleEmail} />
+                    <input type="text"
+                    id="email"
+                    value={email}
+                    onChange={handleEmail}
+                    className={emailError?"badInput":email===""?null:"goodInput"}/>
                     {
                         emailError?
-                        <p>{emailError}</p>:
+                        <p className="alert">{emailError}</p>:
                         null
                     }
                 </div>
                 <div>
                     <label htmlFor="password">Password: </label>
-                    <input type="password" id="password" value={password} onChange={handlePassword} />
+                    <input type="password"
+                    id="password" value={password}
+                    onChange={handlePassword}
+                    className={passwordError?"badInput":password===""?null:"goodInput"} />
                     {
                         passwordError?
-                        <p>{passwordError}</p>:
+                        <p className="alert">{passwordError}</p>:
                         null
                     }
                 </div>
                 <div>
                     <label htmlFor="confirmPassword">Password: </label>
-                    <input type="password" id="confirmPassword" value={confirmPassword} onChange={handleConfirmPassword} />
+                    <input
+                    type="password"
+                    id="confirmPassword"
+                    value={confirmPassword}
+                    onChange={handleConfirmPassword}
+                    className={confirmPasswordError?"badInput":confirmPassword===""?null:"goodInput"}/>
                     {
                         confirmPasswordError?
-                        <p>{confirmPasswordError}</p>:
+                        <p className="alert">{confirmPasswordError}</p>:
                         null
                     }
                 </div>
 
-                {/* <input type="submit" value="Create User" /> */}
+                <input type="submit" value="Create User" disabled={isError}/>
             </form>
         </>
     );
