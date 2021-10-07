@@ -43,12 +43,27 @@ input{
 
 .badInput{
   border: red 2px solid;
+  outline: -webkit-focus-ring-color;
 }
 
-.goodInput{
+.goodInput:focus{
   border: limegreen 2px solid;
+  outline: -webkit-focus-ring-color;
 }
 
-.error{
-  color: red;
+.alert{
+  background-color: lightcoral;
+  border-radius: 3px;
+  border: black 1px solid;
+  margin: 2px auto;
+  font-size: small;
+  color: white;
+  padding: 3px 2px;
+  width: fit-content;
+  min-width: 70%;
+}
+
+form{
+  width: 30%;
+  margin: 0px auto;
 }

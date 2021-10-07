@@ -2,16 +2,12 @@ import React, {useState} from 'react';
 
 const UserForm = (props) => {
     const [firstName, setFirstName] = useState("");
-    const [firstNameError, setFirstNameError] = useState("");
     const [lastName, setLastName] = useState("");
-    const [lastNameError, setLastNameError] = useState("");
     const [email, setEmail] = useState("");
-    const [emailError, setEmailError] = useState("");
     const [password, setPassword] = useState("");
-    const [passwordError, setPasswordError] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [confirmPasswordError, setConfirmPasswordError] = useState("");
-    const [isError, setIsError] = useState(true);
+    const [errors, setErrors] = useState({})
+    const [fieldBlank, setFieldBlank] = useState(true)
 
     const createUser = (e) => {
         e.preventDefault();
@@ -27,76 +23,96 @@ const UserForm = (props) => {
 
     const handleFirstName = (e) => {
         setFirstName(e.target.value);
-        if (e.target.value === "") {
-            setFirstNameError("");
+        if (e.target.value.length !==0 && e.target.value.length < 2) {
+            setErrors({...errors,"firstName":"First name must be minimum 2 characters long."})
         }
-        else if (e.target.value.length < 2) {
-            setFirstNameError("First name must be minimum 2 characters long.");
-            setIsError(true);
+        else if (e.target.value.length === 0) {
+            setFieldBlank(true);
+            if ("firstName" in errors){
+                delete errors.firstName
+            }
         }
         else {
-            setFirstNameError("");
-            setIsError(false);
+            setFieldBlank(false);
+            if ("firstName" in errors){
+                delete errors.firstName
+            }
         }
     }
 
     const handleLastName = (e) => {
         setLastName(e.target.value);
-        if (e.target.value === "") {
-            setLastNameError("");
+        if (e.target.value.length !==0 && e.target.value.length < 2) {
+            setErrors({...errors,"lastName":"Last name must be minimum 2 characters long."})
         }
-        else if (e.target.value.length < 2) {
-            setLastNameError("Last name must be minimum 2 characters long.");
-            setIsError(true);
+        else if (e.target.value.length === 0) {
+            setFieldBlank(true);
+            if ("lastName" in errors){
+                delete errors.lastName
+            }
         }
         else {
-            setLastNameError("");
-            setIsError(false);
+            setFieldBlank(false);
+            if ("lastName" in errors){
+                delete errors.lastName
+            }
         }
     }
 
     const handleEmail = (e) => {
         setEmail(e.target.value);
-        if (e.target.value === "") {
-            setEmailError("");
+        if (e.target.value.length !==0 && e.target.value.length < 5) {
+            setErrors({...errors,"email":"Email must be minimum 5 characters long."})
         }
-        else if (e.target.value.length < 5) {
-            setEmailError("Email must be minimum 5 characters long.");
-            setIsError(true);
+        else if (e.target.value.length === 0) {
+            setFieldBlank(true);
+            if ("email" in errors){
+                delete errors.email
+            }
         }
         else {
-            setEmailError("");
-            setIsError(false);
+            setFieldBlank(false);
+            if ("email" in errors){
+                delete errors.email
+            }
         }
     }
 
     const handlePassword = (e) => {
         setPassword(e.target.value);
-        if (e.target.value === "") {
-            setPasswordError("");
+        if (e.target.value.length !==0 && e.target.value.length < 8) {
+            setErrors({...errors,"password":"Password must be minimum 8 characters long."})
         }
-        else if (e.target.value.length < 8) {
-            setPasswordError("Password must be minimum 8 characters long.");
-            setIsError(true);
+        else if (e.target.value.length === 0) {
+            setFieldBlank(true);
+            if ("password" in errors){
+                delete errors.password
+            }
         }
         else {
-            setPasswordError("");
-            setIsError(false);
+            setFieldBlank(false);
+            if ("password" in errors){
+                delete errors.password
+            }
         }
     }
 
     const handleConfirmPassword = (e) => {
         setConfirmPassword(e.target.value);
-        if (e.target.value === "") {
-            setConfirmPasswordError("");
+        if (e.target.value.legnth !== 0 && e.target.value !== password) {
+            setErrors({...errors,"confirmPassword":"Passwords must match."})
         }
-        else if (e.target.value !== password) {
-            setConfirmPasswordError("Passwords must match.");
-            setIsError(true);
+        else if (e.target.value.length === 0) {
+            setFieldBlank(true);
+            if ("confirmPassword" in errors){
+                delete errors.confirmPassword
+            }
         }
         else {
-            setConfirmPasswordError("");
-            setIsError(false);
+            setFieldBlank(false);
+            if ("confirmPassword" in errors){
+                delete errors.confirmPassword
+            }
         }
     }
 
@@ -110,10 +126,10 @@ const UserForm = (props) => {
                     id="firstName"
                     value={firstName}
                     onChange={handleFirstName}
-                    className={firstNameError?"badInput":firstName===""?null:"goodInput"}/>
+                    className={"firstName" in errors?"badInput":firstName===""?null:"goodInput"}/>
                     {
-                        firstNameError?
-                        <p className="alert">{firstNameError}</p>:
+                        "firstName" in errors?
+                        <p className="alert">{errors.firstName}</p>:
                         null
                     }
                 </div>
@@ -123,10 +139,10 @@ const UserForm = (props) => {
                     id="lastName"
                     value={lastName}
                     onChange={handleLastName}
-                    className={lastNameError?"badInput":lastName===""?null:"goodInput"}/>
+                    className={"lastName" in errors?"badInput":lastName===""?null:"goodInput"}/>
                     {
-                        lastNameError?
-                        <p className="alert">{lastNameError}</p>:
+                        "lastName" in errors?
+                        <p className="alert">{errors.lastName}</p>:
                         null
                     }
                 </div>
@@ -136,10 +152,10 @@ const UserForm = (props) => {
                     id="email"
                     value={email}
                     onChange={handleEmail}
-                    className={emailError?"badInput":email===""?null:"goodInput"}/>
+                    className={"email" in errors?"badInput":email===""?null:"goodInput"}/>
                     {
-                        emailError?
-                        <p className="alert">{emailError}</p>:
+                        "email" in errors?
+                        <p className="alert">{errors.email}</p>:
                         null
                     }
                 </div>
@@ -148,29 +164,32 @@ const UserForm = (props) => {
                     <input type="password"
                     id="password" value={password}
                     onChange={handlePassword}
-                    className={passwordError?"badInput":password===""?null:"goodInput"} />
+                    className={"password" in errors?"badInput":password===""?null:"goodInput"} />
                     {
-                        passwordError?
-                        <p className="alert">{passwordError}</p>:
+                        "password" in errors?
+                        <p className="alert">{errors.password}</p>:
                         null
                     }
                 </div>
                 <div>
-                    <label htmlFor="confirmPassword">Password: </label>
+                    <label htmlFor="confirmPassword">Confirm Password: </label>
                     <input
                     type="password"
                     id="confirmPassword"
                     value={confirmPassword}
                     onChange={handleConfirmPassword}
-                    className={confirmPasswordError?"badInput":confirmPassword===""?null:"goodInput"}/>
+                    className={"confirmPassword" in errors?"badInput":confirmPassword===""?null:confirmPassword.length >= 8?"goodInput":null}/>
                     {
-                        confirmPasswordError?
-                        <p className="alert">{confirmPasswordError}</p>:
+                        "confirmPassword" in errors?
+                        <p className="alert">{errors.confirmPassword}</p>:
                         null
                     }
                 </div>
 
-                <input type="submit" value="Create User" disabled={isError}/>
+                <input
+                type="submit"
+                value="Create User"
+                disabled={Object.keys(errors).length > 0 || fieldBlank ? true : false}/>
             </form>
         </>
     );
