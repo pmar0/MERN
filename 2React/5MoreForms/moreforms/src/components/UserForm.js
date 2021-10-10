@@ -7,7 +7,7 @@ const UserForm = (props) => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errors, setErrors] = useState({})
-    const [fieldBlank, setFieldBlank] = useState(true)
+    const [fieldBlank, setFieldBlank] = useState({'firstName':true,'lastName':true,'email':true,'password':true,'confirmPassword':true})
 
     const createUser = (e) => {
         e.preventDefault();
@@ -19,6 +19,7 @@ const UserForm = (props) => {
         setEmail("");
         setPassword("");
         setConfirmPassword("");
+        setFieldBlank({'firstName':true,'lastName':true,'email':true,'password':true,'confirmPassword':true})
     };
 
     const handleFirstName = (e) => {
@@ -27,13 +28,15 @@ const UserForm = (props) => {
             setErrors({...errors,"firstName":"First name must be minimum 2 characters long."})
         }
         else if (e.target.value.length === 0) {
-            setFieldBlank(true);
+            setFieldBlank({...fieldBlank,'firstName':true});
             if ("firstName" in errors){
                 delete errors.firstName
             }
         }
         else {
-            setFieldBlank(false);
+            if ("firstName" in fieldBlank){
+                delete fieldBlank.firstName
+            }
             if ("firstName" in errors){
                 delete errors.firstName
             }
@@ -46,13 +49,15 @@ const UserForm = (props) => {
             setErrors({...errors,"lastName":"Last name must be minimum 2 characters long."})
         }
         else if (e.target.value.length === 0) {
-            setFieldBlank(true);
+            setFieldBlank({...fieldBlank,'lastName':true});
             if ("lastName" in errors){
                 delete errors.lastName
             }
         }
         else {
-            setFieldBlank(false);
+            if ("lastName" in fieldBlank){
+                delete fieldBlank.lastName
+            }
             if ("lastName" in errors){
                 delete errors.lastName
             }
@@ -65,13 +70,15 @@ const UserForm = (props) => {
             setErrors({...errors,"email":"Email must be minimum 5 characters long."})
         }
         else if (e.target.value.length === 0) {
-            setFieldBlank(true);
+            setFieldBlank({...fieldBlank,'email':true});
             if ("email" in errors){
                 delete errors.email
             }
         }
         else {
-            setFieldBlank(false);
+            if ("email" in fieldBlank){
+                delete fieldBlank.email
+            }
             if ("email" in errors){
                 delete errors.email
             }
@@ -84,13 +91,15 @@ const UserForm = (props) => {
             setErrors({...errors,"password":"Password must be minimum 8 characters long."})
         }
         else if (e.target.value.length === 0) {
-            setFieldBlank(true);
+            setFieldBlank({...fieldBlank,'password':true});
             if ("password" in errors){
                 delete errors.password
             }
         }
         else {
-            setFieldBlank(false);
+            if ("password" in fieldBlank){
+                delete fieldBlank.password
+            }
             if ("password" in errors){
                 delete errors.password
             }
@@ -99,17 +108,19 @@ const UserForm = (props) => {
 
     const handleConfirmPassword = (e) => {
         setConfirmPassword(e.target.value);
-        if (e.target.value.legnth !== 0 && e.target.value !== password) {
+        if (e.target.value.length !== 0 && e.target.value !== password) {
             setErrors({...errors,"confirmPassword":"Passwords must match."})
         }
         else if (e.target.value.length === 0) {
-            setFieldBlank(true);
+            setFieldBlank({...fieldBlank,'confirmPassword':true});
             if ("confirmPassword" in errors){
                 delete errors.confirmPassword
             }
         }
         else {
-            setFieldBlank(false);
+            if ("confirmPassword" in fieldBlank){
+                delete fieldBlank.confirmPassword
+            }
             if ("confirmPassword" in errors){
                 delete errors.confirmPassword
             }
@@ -189,7 +200,9 @@ const UserForm = (props) => {
                 <input
                 type="submit"
                 value="Create User"
-                disabled={Object.keys(errors).length > 0 || fieldBlank ? true : false}/>
+                disabled={Object.keys(errors).length > 0 || Object.keys(fieldBlank).length > 0 ? true : false}
+                className="btn btn-primary"
+                />
             </form>
         </>
     );
