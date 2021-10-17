@@ -2,20 +2,20 @@ import React, {useState} from 'react';
 
 const Boxgen = (props) => {
 
+    const {boxes,setBoxes} = props
+
     const [color, setColor] = useState("")
-    const [dimensions, setDimensions] = useState(0)
-    const [boxes, setBoxes] = useState([])
+    const [dimensions, setDimensions] = useState("") //probably bad practice to set a numberic state to "", but it gets overriden in the form and it shows the placeholder with it this way
 
     const submitBox = (e) => {
         e.preventDefault()
 
         setBoxes([...boxes,{
             "color": color,
-            "width": dimensions,
-            "height": dimensions
+            "size": dimensions,
         }])
 
-        setDimensions(0)
+        setDimensions("") //Im sure this is bad practice to set a numeric state, but it gets overriden in the form and it shows the placeholder with it this way
         setColor("")
         document.getElementById('focus').focus()
     }
@@ -27,19 +27,6 @@ const Boxgen = (props) => {
                 <input type="number" placeholder="Dimensions" value={dimensions} onChange={e => {setDimensions(e.target.value)}}/>
                 <button type="submit">Add Box</button>
             </form>
-            <div style={{margin:"0 auto", width:"50%"}}>
-                {
-                    boxes.map((box,index) => (
-                        <div className="box" key={index} style={{
-                            margin:'5px',
-                            display:'inline-block',
-                            backgroundColor:box.color,
-                            width:box.width!==0?box.width+'px':null,
-                            height:box.height!==0?box.height+'px':null}}>
-                        </div>
-                    ))
-                }
-            </div>
         </div>
     );
 };
