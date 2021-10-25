@@ -65,3 +65,6 @@ Remove the 'lucky_number' field.
 
 Add a 'updated_on' field, and set the value as the current date.
 -- db.students.update({},{$currentDate:{updated_on:{$type:"date"}}},{multi:true})
+or
+--  db.students.update({},{$set:{updated_on:Date()}},{multi:true})
+second option gives EST time and doesn't use ISODate
