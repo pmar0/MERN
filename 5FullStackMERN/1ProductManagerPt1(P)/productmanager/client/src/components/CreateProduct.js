@@ -20,7 +20,7 @@ const CreateProduct = (props) => {
             setPrice("")
             setDescription("")
         })
-        .catch(err => console.log("I fail",error))
+        .catch(err => console.log("I fail",err))
     }
 
     return(
